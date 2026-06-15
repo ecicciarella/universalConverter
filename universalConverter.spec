@@ -4,6 +4,11 @@ from PyInstaller.utils.hooks import collect_data_files, collect_submodules
 
 SP = os.path.join(os.getcwd(), 'venv', 'Lib', 'site-packages')
 
+# Icon is kept in assets/ which is git-ignored. Falls back to None so the
+# build works for anyone cloning the repo without that folder.
+_icon_path = os.path.join(os.getcwd(), 'assets', 'icon.ico')
+APP_ICON = _icon_path if os.path.isfile(_icon_path) else None
+
 datas = []
 
 # reportlab — fonts and graphics data
@@ -115,7 +120,7 @@ exe = EXE(
     strip=False,
     upx=True,
     console=False,                  # no black console window
-    icon=None,
+    icon=APP_ICON,
 )
 
 coll = COLLECT(
